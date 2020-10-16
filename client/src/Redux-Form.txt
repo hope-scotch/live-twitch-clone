@@ -1,0 +1,12 @@
+**** Without Redux ****
+
+Class-based Component
+state -> use 'state' to update 'value' in Input Element in DOM (input.value = current_value)
+onChange -> called from Input Element to setState(value: current_value)
+
+**** With Redux ****
+
+[Redux-Store] Reducer -> mapStateToProps -> props [Component] -> value (Input Element) [DOM]
+[Redux-Store] Reducer <- Redux Form Action Creator <- handler [Component] <- onChange (Input Element) [DOM]
+Redux-based work done by redux-form library
+Redux-Form Reducer is a special Reducer which has ALREADY been created for us by Redux to handle and manipulate forms

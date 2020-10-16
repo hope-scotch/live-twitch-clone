@@ -1,0 +1,45 @@
+React Router only cares about the part of the URL after the port and the domain
+'history' inside RR keeps track of the address -> If the path provided in the address bar matches the path provided as to an instance of Router, it is shown 
+Using RR we can define multiple routes using the same path, and both will be rendered to the screen
+A single path can be matched by different routes using RR
+
+[without using 'exact'] (Whenever a prop is passed only by its name, React automatically assigns it a value of 'true')
+Rule followed by RR: extractedPath.contains(path) 
+For example: if address = .../2
+-> extractedPath -> /2
+=> extractedPath contains '/' and '/2' => Hence contents of both the pages will be rendered
+[using exact] -> extractedPath === 'path' ?
+
+Bad Navigation using traditional HTML
+We add anchor tag to our application with href and click it -> Browser makes a request
+Dev server responds with index.html file
+** Browser receives index.html file, dumps old HTML file it was showing (including all React/Redux state data) **
+index.html file lists our JS files in script tags - browser downloads and executes these scripts
+Our app starts ALL OVER AGAIN!
+
+SPA -> Single Page Application
+What we want!
+User wants to navigate to another page in our app
+User clicks a 'Link' tag
+React Router prevents the browser from navigating to the new page and fetching new index.html file
+URL still changes! -> 'History' sees updated URL, takes URL and sends it to BrowserRouter
+BrowserRouter communicates the URL to Route Components
+Route Components rerender to show new set of components
+
+RR has 3 different Routers
+BrowserRouter -> Uses everything after the Top Level Domain(TLD) (.com, .net) or port as the 'path'
+HashRouter -> Uses evert=ything after a # as the 'path' -> localhost:3000/#/path
+MemoryRouter -> Doesn't use the URL to track navigation -> localhost:3000
+
+In many cases, Deployment using BrowserRouter is Challenging
+
+Using Traditional Servers -> If it does not find a route for '/path', it responds with a 404 NOT FOUND
+
+Using Create-React-Dev-Server -> It checks what is special about '/path'
+Is it a dev resource? Is it a static file in public dir? etc.
+If none of the condition satisfies, it returns back index.html instead of NOT found
+index.html returns bundle.js and our app is accordingly rendered
+
+Using Hash Router solves the problem -> 
+Server does NOT care about the part starting from '#' 
+React Router will look at only the part after the '#'

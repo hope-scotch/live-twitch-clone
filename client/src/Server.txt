@@ -1,0 +1,7 @@
+Instead of manually hooking up a server using express, we are using an npm package 'json-server'
+json-server works hand-in-hand with the json-placeholder api
+json-server closely follows REST-ful conventions
+REST -> Standardized way of setting up routes and functions
+db.json -> We create db.json file inside a separate directory running our server
+db.json is a mock-up of a database and can be used to store data in json format
+db.json is initialized with some default key-value pair that we want to store

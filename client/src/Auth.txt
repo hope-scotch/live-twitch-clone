@@ -1,0 +1,65 @@
+**** Email/Password Authentication ****
+
+We store a record in a database with the user's email and password
+When the user tries to login, we compare email/pw with what is stored in DB
+A user is 'logged in' when they enter the correct email/pw
+
+**** OAuth Authentication ****
+
+User authenticates with outside service provider (Google, LinkedIn, Facebook)
+User authorizes our app to access their informatino
+Outside provider tells us about the user
+We are trusting the outside provider to correctly identification of a user
+OAuth can be used for (1) user identification in our app and (2) our app making actions on behalf of user
+
+The App wants to: -Know your email -Access your profile ...etc
+The actions that the App wants to perform on behalf of the user using some Google Services
+developers.google.com/identity/protocols/googlescopes -> List of All Google Scopes
+
+**** OAuth for Servers ****
+
+Results in a 'token' that a server can use to make requests on behalf of the user
+Usually used when we have an app that needs to access user data when they are NOT loggen in
+Difficult to setup because we need to store a lof of info about the user
+
+**** OAuth for JS Browser Apps ****
+
+Results in a 'token' that a browser app can use to make requests on behalf of the user
+Usually used when we have an app that only needs to access user data when they are logged in
+Very easy to set up thanks to Google's JS lib to automate flow
+
+**** Process ****
+
+From User Profile
+User clicks 'Login with Google' button -> We use Google's JS lib to initiate OAuth process
+From Google Server
+Google's JS LIB makes auth req to Google -> Google displays confirmation screen
+User Accepts -> Pop-up window closes
+From User Profile
+Google JS Lib invokes a callback in our Redux/React App -> Callback provided with 'authorization' token and profile info for user
+
+**** Steps ****
+
+Create a new project at console.developers.google.com/
+Set up an OAuth confirmation screen
+Generate an OAuth Client ID
+Install Google's API Library, initialize it with the OAuth Client
+Make sure the lib gets called any time the user click on the Login with Google button
+
+**** Something Interesting! ****
+
+__proto__: Object -> Reference to the Prototype property of an Object
+JS uses prototype to do inheritance between classes
+Prototype property of isSignedIn Object has get(), set(), listen() functions
+
+**** Redux Setup ****
+
+(Alternative Approach)
+We extract the entire auth logic from the Google Auth Component onto Redux-based Action Creators
+GoogleAuth Component Event Handlers -> onSignInClick(), onSignOutClick()
+ActionCreators -> changeAuth(), trySignIn(), trySignOut()
+ActionCreators request and communicate with GAPI Auth2 unlike GoogleAuth Component
+trySignIn(), trySignOut() requests info from GAPI Auth2
+GAPI Auth2 returns info onto changeAuth()
+changeAuth() updates the state accordingly -> Redux Store
+Redux Store communicates the data back into the GoogleAuth Component using mapStateToProps, and the same data would be available to GoogleAuth
